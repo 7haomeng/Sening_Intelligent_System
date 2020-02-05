@@ -1,0 +1,14 @@
+devel/
+build/
+*.bag
+*.tar*
+# Jupyter checkpoint file
+.ipynb_checkpoints/
+
+# Pytorch dataset
+10-Deep_Learning_2/data/
+12-1_Pytorch-FCN/data/
+12-1_Pytorch-FCN/models/
+12-1_Pytorch-FCN/scores/
+# Pytorch model
+*.pth
