@@ -1,0 +1,17 @@
+<launch>
+  <arg name="use_sim" default="false" doc="If you can't get normal image from your USB cam, set this to true"/>
+  <!-- SR300 -->
+  <group unless="$(arg use_sim)">
+    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+      <!--arg name="color_fps" value="10"/-->
+      <!--arg name="depth_fps" value="10"/-->
+    </include>
+  </group>
+  <!-- Apriltag -->
+  <include file="$(find apriltags_ros)/launch/topic2_apriltag.launch"/>
+  <!-- Calculate distance node -->
+  <!-- Tag distance -->
+  <include file="$(find tutorial)/launch/tag_distance.launch"/>
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find tutorial)/config/rviz/topic2.rviz"/>
+</launch>
