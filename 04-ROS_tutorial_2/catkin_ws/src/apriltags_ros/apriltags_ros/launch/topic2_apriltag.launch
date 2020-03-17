@@ -16,8 +16,8 @@
     <param name="projected_optics" type="bool" value="true" />
     <!-- Describe the tags -->
     <rosparam param="tag_descriptions">[
-      {id: 0, size: 0.1095},
-      {id: 1, size: 0.1095}]
+      {id: 0, size: 0.084},
+      {id: 1, size: 0.084}]
     </rosparam>
   </node>
 </launch>
