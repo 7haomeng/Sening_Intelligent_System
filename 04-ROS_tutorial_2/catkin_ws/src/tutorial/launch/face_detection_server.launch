@@ -1,0 +1,23 @@
+<launch>
+  <!-- Define argument of this launch -->
+  <arg name="one_shot" default="true" doc="whether execute multiple times"/>
+
+  <!-- Turn on camera -->
+  <node pkg="usb_cam" type="usb_cam_node" name="usb_cam" required="true" clear_params="true">
+      <!-- Set parameter -->
+      <param name="pixel_format" value="mjpeg"/>
+  </node>
+
+  <!-- Face detection service -->
+  <node pkg="tutorial" type="service_server" name="service_server" output="screen" required="true"/>
+  
+  <!-- Face detection client -->
+  <!-- Only execute once -->
+  <group if="$(arg one_shot)">
+    <node pkg="tutorial" type="call_from_client" name="call_from_client" output="screen" required="true"/>
+  </group>
+  <!-- After the process end, wait for one second and continue to execute -->
+  <group unless="$(arg one_shot)">
+    <node pkg="tutorial" type="call_from_client" name="call_from_client" output="screen" respawn="true" respawn_delay="1.0"/>
+  </group>
+</launch>
