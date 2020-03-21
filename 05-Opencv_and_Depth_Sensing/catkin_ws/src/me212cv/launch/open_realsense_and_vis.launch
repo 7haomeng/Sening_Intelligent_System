@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
   <!-- SR300 -->
   <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch">
