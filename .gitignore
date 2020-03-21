@@ -2,6 +2,9 @@ devel/
 build/
 *.bag
 *.tar*
+*.swp
+*.swo
+*.swq
 # Jupyter checkpoint file
 .ipynb_checkpoints/
 
