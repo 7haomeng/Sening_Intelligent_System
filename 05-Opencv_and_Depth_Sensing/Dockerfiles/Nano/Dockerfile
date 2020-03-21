@@ -5,4 +5,4 @@ WORKDIR /home/arg/sis_lab_all_2020/
 COPY . /home/arg/sis_lab_all_2020/05-Opencv_and_Depth_Sensing
 
 WORKDIR /home/arg/sis_lab_all_2020/05-Opencv_and_Depth_Sensing/catkin_ws
-RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make"
+RUN /bin/bash -c "source /opt/ros/kinetic/setup.bash && catkin_make"
