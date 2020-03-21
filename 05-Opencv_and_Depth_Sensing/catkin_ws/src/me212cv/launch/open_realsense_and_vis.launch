@@ -1,0 +1,9 @@
+<launch>
+  <!-- SR300 -->
+  <include file="$(find realsense_camera)/launch/sr300_nodelet_rgbd.launch">
+    <arg name="color_fps" value="10"/>
+    <arg name="depth_fps" value="10"/>
+  </include>
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz"/>
+</launch>
