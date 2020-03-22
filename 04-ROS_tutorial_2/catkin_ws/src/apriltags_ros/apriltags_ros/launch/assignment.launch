@@ -16,22 +16,22 @@
 
     <!-- Describe the tags -->
     <rosparam param="tag_descriptions">[
-      {id: 0, size: 0.0295},
-      {id: 1, size: 0.0295},
-      {id: 2, size: 0.0295},
-      {id: 3, size: 0.0295},
-      {id: 4, size: 0.0295},
-      {id: 5, size: 0.0295},
-      {id: 6, size: 0.0295},
-      {id: 7, size: 0.0295},
-      {id: 8, size: 0.0295},
-      {id: 9, size: 0.0295},
-      {id: 10, size: 0.0295},
-      {id: 11, size: 0.0295},
-      {id: 12, size: 0.0295},
-      {id: 13, size: 0.0295},
-      {id: 14, size: 0.0295},
-      {id: 15, size: 0.0295},]
+      {id: 0, size: 0.0375},
+      {id: 1, size: 0.0375},
+      {id: 2, size: 0.0375},
+      {id: 3, size: 0.0375},
+      {id: 4, size: 0.0375},
+      {id: 5, size: 0.0375},
+      {id: 6, size: 0.0375},
+      {id: 7, size: 0.0375},
+      {id: 8, size: 0.0375},
+      {id: 9, size: 0.0375},
+      {id: 10, size: 0.0375},
+      {id: 11, size: 0.0375},
+      {id: 12, size: 0.0375},
+      {id: 13, size: 0.0375},
+      {id: 14, size: 0.0375},
+      {id: 15, size: 0.0375},]
     </rosparam>
   </node>
 </launch>
