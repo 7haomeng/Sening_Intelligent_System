@@ -31,7 +31,7 @@ img_result_pub = rospy.Publisher('/object_detection/img_result', Image, queue_si
 cv_bridge = CvBridge()
 
 # Get the camera calibration parameter for the rectified image
-msg = rospy.wait_for_message('/camera/rgb/camera_info', CameraInfo, timeout=None)
+msg = rospy.wait_for_message('/camera/color/camera_info', CameraInfo, timeout=None)
 #     [fx'  0  cx' Tx]
 # P = [ 0  fy' cy' Ty]
 #     [ 0   0   1   0]
@@ -46,15 +46,15 @@ def main():
     useDepth = False
     if not useHSV:
         # Subscribe to RGB image
-        rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosImageVizCallback)
+        rospy.Subscriber('/camera/color/image_raw/compressed', Image, rosImageVizCallback)
     else:
         if not useDepth:
             #    Subscribe to RGB images
-            rospy.Subscriber('/camera/rgb/image_rect_color', Image, rosHSVProcessCallBack)
+            rospy.Subscriber('/camera/color/image_raw/compressed', Image, rosHSVProcessCallBack)
         else:
             #    Subscribe to both RGB and Depth images with a Synchronizer
-            image_sub = message_filters.Subscriber("/camera/rgb/image_rect_color", Image)
-            depth_sub = message_filters.Subscriber("/camera/depth_registered/sw_registered/image_rect", Image)
+            image_sub = message_filters.Subscriber("/camera/color/image_raw/compressed", Image)
+            depth_sub = message_filters.Subscriber("/camera/aligned_depth_to_color/image_raw/compressed", Image)
             ts = message_filters.ApproximateTimeSynchronizer([image_sub, depth_sub], 10, 0.5)
             ts.registerCallback(rosRGBDCallBack)
     rospy.spin()
