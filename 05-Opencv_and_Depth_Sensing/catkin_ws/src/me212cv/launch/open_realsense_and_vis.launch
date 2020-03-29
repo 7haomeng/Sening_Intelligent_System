@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- RealSense Camera -->
+  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+    <arg name="color_fps" value="10"/>
+    <arg name="depth_fps" value="10"/>
+  </include>
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz"/>
+</launch>
