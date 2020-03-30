@@ -46,15 +46,15 @@ def main():
     useDepth = False
     if not useHSV:
         # Subscribe to RGB image
-        rospy.Subscriber('/camera/color/image_raw/compressed', Image, rosImageVizCallback)
+        rospy.Subscriber('/camera/color/image_raw', Image, rosImageVizCallback)
     else:
         if not useDepth:
             #    Subscribe to RGB images
-            rospy.Subscriber('/camera/color/image_raw/compressed', Image, rosHSVProcessCallBack)
+            rospy.Subscriber('/camera/color/image_raw', Image, rosHSVProcessCallBack)
         else:
             #    Subscribe to both RGB and Depth images with a Synchronizer
-            image_sub = message_filters.Subscriber("/camera/color/image_raw/compressed", Image)
-            depth_sub = message_filters.Subscriber("/camera/aligned_depth_to_color/image_raw/compressed", Image)
+            image_sub = message_filters.Subscriber("/camera/color/image_raw", Image)
+            depth_sub = message_filters.Subscriber("/camera/aligned_depth_to_color/image_raw", Image)
             ts = message_filters.ApproximateTimeSynchronizer([image_sub, depth_sub], 10, 0.5)
             ts.registerCallback(rosRGBDCallBack)
     rospy.spin()
