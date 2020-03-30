@@ -108,7 +108,7 @@ def HSVObjectDetection(cv_image, toPrint = True):
         encoding="passthrough"))
     mask_ero_dil_pub.publish(cv_bridge.cv2_to_imgmsg(mask_eroded_dilated,
         encoding="passthrough"))
-    image, contours, hierarchy = cv2.findContours(
+    contours, hierarchy = cv2.findContours(
         mask_eroded_dilated,
         cv2.RETR_EXTERNAL,
         cv2.CHAIN_APPROX_SIMPLE)
