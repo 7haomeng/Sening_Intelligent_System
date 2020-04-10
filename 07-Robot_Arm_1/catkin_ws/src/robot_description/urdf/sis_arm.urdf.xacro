@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<robot name="sis_arm" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Color define -->
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0.1 0.1 0.1 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="gray">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+  <!-- end Color define -->
+
+  <!-- Constants define -->
+  <xacro:property name="M_PI" value="3.1415"/>
+  <xacro:property name="acrylic_length" value="0.15"/>
+  <xacro:property name="acrylic_height" value="0.0025"/>
+  <xacro:property name="acrylic_mass" value="0.08"/>
+  <xacro:property name="motor_mass" value="0.0535"/>
+  <xacro:property name="F3_mass" value="0.009"/>
+  <xacro:property name="F2_mass" value="0.009"/>
+  <xacro:property name="gripper_base_mass" value="0.01"/>
+  <xacro:property name="gripper_finger_mass" value="0.005"/>
+  <!-- end Constants define -->
+
+  <!-- Macro define -->
+  <!-- default inertial -->
+  <xacro:macro name="default_inertial" params="mass">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </xacro:macro>
+  <!-- end default inertial -->
+  <!-- motor and frame (F3) set --> 
+  <xacro:macro name="motor_frame_set" params="prefix">
+    <link name="${prefix}_f3">
+      <visual>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="gray"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <xacro:default_inertial mass="${F3_mass}"/>
+    </link>
+    <link name="${prefix}_motor">
+      <visual>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/ax12_box.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/ax12_box.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <xacro:default_inertial mass="${motor_mass}"/>
+    </link>
+    <joint name="${prefix}_motor_f3_joint" type="fixed">
+      <parent link="${prefix}_f3"/>
+      <child link="${prefix}_motor"/>
+      <origin xyz="0 0 -0.041" rpy="0 ${M_PI} 0"/>
+    </joint>
+  </xacro:macro>
+  <!-- end motor and frame (F3) set --> 
+  <!-- gripper finger -->
+  <xacro:macro name="gripper_finger" params="prefix *origin">
+    <link name="${prefix}_finger">
+      <visual>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/pincher_finger.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/pincher_finger.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+      <xacro:default_inertial mass="${gripper_finger_mass}"/>
+    </link>
+    <joint name="${prefix}_finger_joint" type="prismatic">
+      <xacro:insert_block name="origin"/>
+      <axis rpy="0 0 0" xyz="-1 0 0"/>
+      <limit effort="1000.0" upper="0.012" lower="0.0" velocity="1.0"/>
+      <parent link="gripper_base"/> 
+      <child link="${prefix}_finger"/>
+    </joint>
+  </xacro:macro>
+  <!-- end gripper finger -->
+  <!-- gripper -->
+  <xacro:macro name="gripper" params="*origin">
+    <link name="gripper_base">
+      <visual>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/pincher_finger_base.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://robot_description/meshes/pincher_finger_base.stl" scale="0.01 0.01 0.01"/>
+        </geometry>
+      </collision>
+      <xacro:default_inertial mass="${gripper_base_mass}"/>
+    </link>
+    <joint name="gripper_motor_base" type="fixed">
+      <parent link="gripper_motor"/>
+      <child link="gripper_base"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+    <xacro:gripper_finger prefix="left">
+      <origin rpy="${M_PI/2} 0 ${M_PI}" xyz="-0.0185 0.001 0"/>
+    </xacro:gripper_finger>
+    <xacro:gripper_finger prefix="right">
+      <origin rpy="${-M_PI/2} 0 0" xyz="0.0185 0.001 0"/>
+    </xacro:gripper_finger>
+  </xacro:macro>
+  <!-- end gripper -->
+  <!-- end Macro define -->
+  
+
+
+  <!-- Acrylic_base -->
+  <link name="base">
+    <visual>
+      <geometry>  
+         <box size="${acrylic_length} ${acrylic_length} ${acrylic_height}"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>  
+         <box size="${acrylic_length} ${acrylic_length} ${acrylic_height}"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="${acrylic_mass}"/>
+  </link>
+  <!-- end Acrylic base -->
+  <!-- Pan frame and motor -->
+  <xacro:motor_frame_set prefix="pan"/>
+  <!-- end Pan frame and motor -->
+  <!-- Base and pan_frame joint -->
+  <joint name="base_pan_f3_joint" type="fixed">
+      <parent link="base"/>
+      <child link="pan_f3"/>
+      <origin xyz="0 0 0.001" rpy="0 ${M_PI} 0"/>
+  </joint>
+  <!-- end Base and pan_frame joint -->
+  <!-- Tilt frame and motor -->
+  <xacro:motor_frame_set prefix="tilt"/>
+  <!-- end Tilt frame and motor -->
+  <!-- Pan joint -->
+  <joint name="pan_joint" type="revolute">
+    <axis xyz="0 0 -1"/>
+    <parent link="pan_motor"/>
+    <child link="tilt_f3"/>
+    <limit effort="1000.0" upper="2.616" lower="-2.616" velocity="2.0"/>
+    <origin xyz="0 0.02 0" rpy="0 ${-M_PI/2} ${M_PI/2}"/>
+  </joint>
+  <!-- end pan joint -->
+  <!-- Frame 2 -->
+  <link name="tilt_f2">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/F2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/F2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="${F2_mass}"/>
+  </link>
+  <!-- end frame 2 -->
+  <!-- Tilt joint -->
+  <joint name="tilt_joint" type="revolute">
+    <axis xyz="0 1 0"/>
+    <parent link="tilt_motor"/>
+    <child link="tilt_f2"/>
+    <limit effort="1000.0" upper="0.8" lower="-2.0" velocity="2.0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <!-- end Tilt joint -->
+  <!-- Gripper frame and motor -->
+  <xacro:motor_frame_set prefix="gripper"/>
+  <!-- end Gripper frame and motor -->
+  <!-- Frame joint -->
+  <joint name="frame_2_frame_3_joint" type="fixed">
+    <parent link="tilt_f2"/>
+    <child link="gripper_f3"/>
+    <origin xyz="0 0 0.0265" rpy="0 ${M_PI} ${-M_PI/2}"/>
+  </joint>
+  <!-- end Frame joint -->
+  <!-- gripper -->
+  <xacro:gripper>
+    <origin xyz="0 0.0177 0.001" rpy="0 0 0"/>
+  </xacro:gripper>
+  <!-- end gripper -->
+  <!-- TCP -->
+  <link name="tcp"/>
+  <!-- end TCP -->
+  <!-- gripper base to tcp joint -->
+  <joint name="gripper_base_tcp_joint" type="fixed">
+    <parent link="gripper_base"/>
+    <child link="tcp"/>
+    <origin xyz="0 0.035 0" rpy="${-M_PI/2} 0 ${M_PI/2}"/>
+  </joint>
+  <!-- end gripper base to tcp joint -->
+</robot>
