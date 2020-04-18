@@ -4,6 +4,7 @@ robot = Robot('locobot')
 
 target_poses = {'position': np.array([0.28, 0.17, 0.22]),
                 'pitch': 0.5,
+                'roll': 0.5,
                 'numerical': False}
 
 robot.arm.go_home()

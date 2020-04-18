@@ -25,10 +25,10 @@ fi
 if [ $# -gt 0 ]; then
     if [[ "$1" == "cuda9" || "$1" == "cuda9.0" ]] ; then
         echo -e "RUN: \"${DOCKER_CMD}\""
-        DOCKER_TAG="v3"
+        DOCKER_TAG="latest"
     elif [[ "$1" == "cuda10" || "$1" == "cuda10.0" ]] ; then
         echo -e "RUN: \"${DOCKER_CMD}\""
-        DOCKER_TAG="v3"
+        DOCKER_TAG="latest"
     elif [ "$1" == "same" ] ; then
         echo -e "RUN: \"docker exec\""
     else
@@ -65,7 +65,7 @@ if [ $# -gt 0 ]; then
             -v /usr/lib/nvidia-384:/usr/lib/nvidia-384 \
             -v /usr/lib32/nvidia-384:/usr/lib32/nvidia-384 \
             --ipc host \
-            pytorch-jupyter:${DOCKER_TAG} 
+            argnctu/sis_lab7:${DOCKER_TAG} 
     fi
 else
     echo "please provide docker tag name."
