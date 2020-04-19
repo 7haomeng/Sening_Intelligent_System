@@ -1,0 +1,14 @@
+<!-- -*- mode: xml -*- -->
+<launch>
+  <!-- Load controller configuration to parameter server -->
+  <rosparam file="$(find sis_arm)/config/sis_arm_joint_controller.yaml" command="load"/>
+  <!-- Start specified joint controllers -->
+  <node pkg="dynamixel_controllers" type="controller_spawner.py" name="dynamixel_spawner"
+      args="--manager=dxl_manager
+            --port=sis_arm_port
+            --type=simple
+            pan_controller
+            tilt_controller
+            gripper_controller"
+      output="screen"/>
+</launch>

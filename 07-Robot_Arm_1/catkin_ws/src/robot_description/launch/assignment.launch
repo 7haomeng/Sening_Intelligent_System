@@ -1,0 +1,17 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="model" default="$(find robot_description)/urdf/husky.urdf.xacro"/>
+  <arg name="rvizconfig" default="$(find robot_description)/rviz/assignment.rviz" />
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)
+                                           --inorder
+                                           robot_namespace:=/
+                                           laser_enabled:=false
+                                           kinetic_enabled:=false
+                                           urdf_extras:="/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="true"/>
+  </node>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+</launch>
+
