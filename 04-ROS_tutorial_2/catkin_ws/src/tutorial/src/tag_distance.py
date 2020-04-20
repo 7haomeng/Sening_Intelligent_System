@@ -20,6 +20,7 @@ if __name__ == "__main__":
 			now = rospy.Time.now()
 			listener.waitForTransform('tag_0', 'tag_1', now, rospy.Duration(3.0))
 			(trans, rot) = listener.lookupTransform('tag_0', 'tag_1', now)
+			#print(trans)
 			distance = sqrt(trans[0]**2+trans[1]**2+trans[2]**2)
 			rospy.loginfo("Distance: %f" %(distance))
 		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, \

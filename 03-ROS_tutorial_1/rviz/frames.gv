@@ -1,0 +1,11 @@
+digraph G {
+"A" -> "B"[label="Broadcaster: /assignment2_node\nAverage rate: 2.222 Hz\nMost recent transform: 1585051934.794 ( 0.386 sec old)\nBuffer length: 4.500 sec\n"];
+"B" -> "C"[label="Broadcaster: /assignment2_node\nAverage rate: 2.222 Hz\nMost recent transform: 1585051934.794 ( 0.386 sec old)\nBuffer length: 4.500 sec\n"];
+"C" -> "D"[label="Broadcaster: /assignment2_node\nAverage rate: 2.222 Hz\nMost recent transform: 1585051934.794 ( 0.386 sec old)\nBuffer length: 4.500 sec\n"];
+"C" -> "E"[label="Broadcaster: /assignment2_node\nAverage rate: 2.222 Hz\nMost recent transform: 1585051934.794 ( 0.386 sec old)\nBuffer length: 4.500 sec\n"];
+"E" -> "F"[label="Broadcaster: /assignment2_node\nAverage rate: 2.222 Hz\nMost recent transform: 1585051934.794 ( 0.386 sec old)\nBuffer length: 4.500 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1585051935.180"[ shape=plaintext ] ;
+ }->"A";
+}
