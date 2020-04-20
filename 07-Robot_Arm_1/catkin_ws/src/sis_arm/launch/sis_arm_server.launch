@@ -1,0 +1,7 @@
+<!-- -*- mode=XML -*- -->
+<launch>
+  <include file="$(find sis_arm)/launch/controller_manager.launch"/>
+  <include file="$(find sis_arm)/launch/controller_spawner.launch"/>
+  <node pkg="sis_arm" type="sis_arm_server" name="sis_arm_server" output="screen" required="true"/>
+</launch>
+
