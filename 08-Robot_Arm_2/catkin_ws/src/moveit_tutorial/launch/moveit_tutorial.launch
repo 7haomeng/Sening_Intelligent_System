@@ -1,0 +1,5 @@
+<!-- -*- XML -*- -->
+<launch>
+  <include file="$(find ur5_moveit_config)/launch/demo.launch"/>
+  <node pkg="moveit_tutorial" name="move_group_tutorial" type="move_group_tutorial" output="screen" required="true"/>
+</launch>
