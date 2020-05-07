@@ -1,0 +1,10 @@
+<launch>
+  <arg name="model" doc="VIVA_model.ply file path"/>
+  <arg name="cloud" doc="VIVA_cloud.ply file path"/>
+  <!-- ICP exmaple -->
+  <node pkg="pcl_example" type="icp_example" name="icp_example" output="screen"/>
+  	<param name="model_path" value="$(arg model)" />
+  	<param name="cloud_path" value="$(arg cloud)" />
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find pcl_example)/config/rviz/topic3.rviz"/>
+</launch>

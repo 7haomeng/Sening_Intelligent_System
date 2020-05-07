@@ -1,0 +1,9 @@
+<launch>
+  <!-- Realsense Camera -->
+  <!--include file="$(find realsense2_camera)/launch/rs_rgbd.launch"/-->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+  <!-- PCL exmaple -->
+  <node pkg="pcl_example" type="pcl_example" name="pcl_example" output="screen"/>
+  <!-- rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find pcl_example)/config/rviz/topic1.rviz"/>
+</launch>
